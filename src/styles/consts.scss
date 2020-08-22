@@ -1,0 +1,15 @@
+$grey: #fafafa;
+$borderGrey: #f0f0f0;
+
+@mixin vision {
+  &-show {
+    opacity: 1;
+    z-index: 1;
+    transition: opacity 0.3s ease-in-out;
+  }
+  &-hide {
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+}

@@ -1,0 +1,11 @@
+.headElement {
+  display: flex;
+  width: 100%;
+  min-height: 5vh;
+  &__main {
+    flex: 10;
+  }
+  &__polarityFilter {
+    flex: 1;
+  }
+}

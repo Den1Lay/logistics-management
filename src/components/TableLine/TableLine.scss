@@ -1,0 +1,59 @@
+@import '@/styles/consts';
+
+@mixin mainElems ($fSize) {
+  width: $fSize;
+  border: none;
+  transition: 0.3s ease-in-out;
+}
+
+.tableLine {
+  display: flex;
+  height: 5vh;
+  width: 100%;
+ 
+  &__delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    @include vision;
+    .anticon-delete {
+      cursor: pointer;
+      font-size: 2.5vh;
+      &:hover {
+        color: tomato
+      }
+    }
+  }
+  &__main {
+    flex: 12;
+    border-bottom: 1px solid $borderGrey;
+    background: transparent;
+    transition: 0.4s ease-in-out;
+    &-hovered  {
+      background: $grey;
+      transition: 0.4s ease-in-out;
+    }
+
+    display: flex;
+    &_numb {
+      @include mainElems(10%);
+    }
+    &_date {
+      //flex: 3;
+      @include mainElems(20%)
+    }
+    &_firm {
+      //flex: 2
+      @include mainElems(20%)
+    }
+    &_comment {
+      //flex: 4;
+      @include mainElems(30%)
+    }
+    &_carrier {
+      //flex: 3;
+      @include mainElems(30%)
+    }
+  }
+}

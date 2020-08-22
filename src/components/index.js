@@ -1,0 +1,6 @@
+export {default as TextReducer} from './TextReducer'
+export {default as TableLine} from './TableLine'
+export {default as HeadElement} from './HeadElement'
+export {default as Firm} from './Firm'
+export {default as Carrier} from './Carrier'
+export {default as Comment} from './Comment'

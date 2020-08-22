@@ -1,0 +1,21 @@
+.textReducer {
+  //margin: 0 2vh;
+  //margin: 0 2vh 0 2vh;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  line-height: 5vh;
+  text-align: center;
+  &__target {
+    display: flex;
+    //max-height: 2vh;
+    justify-content: center;
+    width: fit-content;
+    text-align: center;
+  }
+  .clickable {
+    cursor: pointer;
+  }
+}
