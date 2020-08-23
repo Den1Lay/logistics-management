@@ -1,21 +1,22 @@
 // быстрый чек на ререндор и дальнейшее планирование от него
 import React from 'react'
+import {connect} from 'react-redux'
 
-import {TableLine} from '@/components'
+import {TableLine, HeadPart} from '@/containers'
 // фильтры 
 import './Table.scss';
 
-const Table = () => {
+const Table = ({data}) => {
   return (
     <div className='table'>
       <div className='table__head'>
-        
+        <HeadPart />
       </div>
       <div className='table__main'>
-        <TableLine/>
+        {data.map((dataObj) => <TableLine data={dataObj} />)}
       </div>
     </div>
   )
 }
 
-export default Table
+export default connect(({data}) => ({data}))(Table)

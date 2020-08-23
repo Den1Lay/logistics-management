@@ -9,7 +9,7 @@
     margin: 2vh;
   }
   &__main {
-    width: 80%;;
+    width: 80%;
   }
   &__search {
     width: 20%;
@@ -19,5 +19,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+  }
+
+  &__modal {
+    width: 100%;
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .ant-input-group-addon {
+      font-size: 1.75vh;
+    }
+    &_atiLink {
+      text-align: center;
+    }
+    // .ant-btn {
+    //   line-height: 1vh !important;
+    // }
+    button {
+      line-height: 1vh !important;
+    }
   }
 }

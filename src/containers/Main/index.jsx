@@ -1,32 +1,28 @@
-
-
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 
-import {DatePicker, Input, Button} from 'antd'
-import {TextReducer} from '@/components'
-import {Table} from '@/containers'
+
+import {Table, ActionsPart} from '@/containers'
 
 import './Main.scss'
 
-const {RangePicker} = DatePicker;
-
-const Main = ({state}) => {
-  const [text, setText] = useState('realbiglorem realbiglore mrealbiglor evtextData.payloadmrealbiglore mjgjjdf')
-
+const Main = ({}) => {
 
   useEffect(() => {
-    console.log('DATA:', state)
+
   });
 
   // function rangePickHandler(vals) {
   //   console.log('VALS:', vals)
   // }
-  console.log('TEXT:',text)
   return (
     <div className='main'>
       <div className='main__top'>
-
+        <div className='main__top_space'>
+        </div>
+        <div className='main__top_actions'>
+          <ActionsPart />
+        </div>
       </div>
       <div className='main__table'>
         <Table />
@@ -45,4 +41,4 @@ const Main = ({state}) => {
   )
 }
 
-export default connect((state)=>({state}), {})(Main);
+export default connect(()=>({}), {})(Main);

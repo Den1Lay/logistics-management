@@ -1,2 +1,5 @@
 export {default as Main} from './Main'
 export {default as Table} from './Table'
+export {default as TableLine} from './TableLine'
+export {default as HeadPart} from './HeadPart'
+export {default as ActionsPart} from './ActionsPart'

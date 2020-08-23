@@ -5,8 +5,12 @@
   flex-direction: column;
   &__head {
     flex: 1;
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
   }
   &__main {
     flex: 12;
+    height: 100%;
   }
 }

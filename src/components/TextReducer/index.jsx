@@ -15,7 +15,7 @@ import {Tooltip} from 'antd';
 
 import './TextReducer.scss'
 
-const TextReducer = ({text='', onClick=()=>{}, clickable=false}) => {
+const TextReducer = ({text='', onClick=()=>{}, clickable=false, dlsMessage=null}) => {
   
   const wrapperRef = useRef(null);
   const targetRef = useRef(null)
@@ -33,7 +33,7 @@ const TextReducer = ({text='', onClick=()=>{}, clickable=false}) => {
     const {payload, ready, changed} = textData;
 
     if(targetW > wrapperW) {
-      let resStr = payload.substring(0, payload.length/(targetW/wrapperW)-2);
+      let resStr = payload.substring(0, 0.85*payload.length/(targetW/wrapperW));
       setTextData({...textData, payload: resStr, changed: true});
 
     } else if(!ready) {
@@ -49,6 +49,7 @@ const TextReducer = ({text='', onClick=()=>{}, clickable=false}) => {
         ref={targetRef} 
         className={classNames('textReducer__target', clickable && 'clickable')}  
         onClick={onClick}>
+        {dlsMessage}
         { 
           textData.changed ?
           <Tooltip title={text}>

@@ -12,7 +12,7 @@ const Comment = () => {
   return (
     <>
       <div className='comment' >
-        <TextReducer onClick={() => setVisible(true)} text={'Comment'} clickable />
+        <TextReducer onClick={() => setVisible(true)} text={'Comment ewe w wwewewe wewewewew wewewe wewewe loooooool lol'} clickable />
       </div>
       <Modal
         title="Comment editor"

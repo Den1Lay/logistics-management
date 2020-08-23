@@ -7,6 +7,7 @@ import store from '@/store'
 import { Main } from '@/containers';
 
 import '@/styles/index.scss';
+import '@/styles/globals.scss';
 
 ReactDOM.render(
   <Provider store={store}>
