@@ -28,3 +28,11 @@ export const setCarrier = payload => ({
   type: 'SET_CARRIER',
   payload
 })
+export const newCarrier = payload => ({
+  type: 'NEW_CARRIER',
+  payload
+})
+export const deleteNote = payload => ({
+  type: 'DELETE_NOTE',
+  payload
+})

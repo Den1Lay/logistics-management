@@ -37,7 +37,7 @@ export default originalFiltersState => newFiltersState => {
       case 'carrier':
         const thatIndexes = [];
         for(let men of carriers) {
-          if(findEquals(men.secondName)) {
+          if(findEquals(`${men.secondName} ${men.firstName}`)) {
             thatIndexes.push(men.id)
           }
         };
@@ -52,9 +52,9 @@ export default originalFiltersState => newFiltersState => {
     data = data.filter(({carrier}) => !carrier)
   })();
 
-  function polaritiFilter() {
+  (function polaritiFilter() {
     const findSecondName = (id) => {
-      let res;
+      let res = null;
       for(let men of carriers) {
         if(men.id === id) {
           res = men.secondName
@@ -63,10 +63,16 @@ export default originalFiltersState => newFiltersState => {
       }
       return res;
     }
+    const compareStrings = (a, b) => a > b ? 1 : a < b ? -1 : 0;
 
     switch(reverseType) {
       case 'carrier':
         data = data.sort(({carrier: cA}, {carrier: cB}) => {
+          if(cA === null) {
+            return 1;
+          } else if (cB === null) {
+            return -1;
+          }
           const A2Name = findSecondName(cA),
           B2Name = findSecondName(cB);
           return A2Name > B2Name
@@ -77,19 +83,35 @@ export default originalFiltersState => newFiltersState => {
         })
       break
       case 'number':
-        data = data.sort(() => {
-
-        })
+        data = data.sort((a, b) => +b.number - +a.number)
       break
       case 'firm':
+        data = data.sort(({firm: fA}, {firm: fB}) => {
+          if(fA === null) {
+            return 1;
+          } else if(fB === null) {
+            return -1;
+          };
+          return compareStrings(fA.name, fB.name)
+        })
       break
       case 'comment':
+        data = data.sort(({comment: cA}, {comment: cB}) => {
+          if(cA === null) {
+            return 1;
+          } else if(cB === null) {
+            return -1;
+          };
+          return compareStrings(cA.short, cB.short);
+        })
       break
       default: 
       console.log('%c%s','color: red; font-size:22px;', 'UNEXPECTED_REVERSE_TYPE:', reverseType)
     }
-    
-  };
+    if(reverse) {
+      data = data.reverse()
+    }
+  })()
 
   return data
 }

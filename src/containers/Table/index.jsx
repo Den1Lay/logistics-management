@@ -14,7 +14,7 @@ const Table = ({showData}) => {
       </div>
       <div className='table__main'>
         <div className='table__main_wrapper'>
-          {showData.map((dataObj) => <TableLine data={dataObj} />)}
+          {showData.map((dataObj) => <TableLine data={dataObj}  />)}
         </div>
       </div>
     </div>

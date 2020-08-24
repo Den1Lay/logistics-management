@@ -24,6 +24,9 @@
         color: tomato
       }
     }
+    &_btn {
+      @include icon
+    }
   }
   &__main {
     flex: 12;

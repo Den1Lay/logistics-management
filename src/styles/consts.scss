@@ -23,3 +23,9 @@ $darkBlue: #096dd9;
   flex-direction: column;
   justify-content: space-between;
 }
+
+@mixin icon { // накинь на все иконки
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+}

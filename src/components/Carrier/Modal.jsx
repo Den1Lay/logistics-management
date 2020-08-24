@@ -1,7 +1,9 @@
 import React,{useState, useEffect} from 'react'
-import {Modal, Select, Input, Mentions, Button} from 'antd'
+import {Modal, Select, Input, Mentions, Button, message} from 'antd'
 
-const WorkModal = ({source, visible, setVisible, onSave, v}) => {
+import {checkPhone} from '@/utils' 
+
+const WorkModal = ({source, visible, setVisible, onSave, cleanAfterSave=false, v}) => {
   const restartData = () => source ? {...source} : {
     firstName: '',
     secondName: '', 
@@ -21,7 +23,18 @@ const WorkModal = ({source, visible, setVisible, onSave, v}) => {
 
   function saveClickHandler() {
     // make here some checks
-    onSave(data)
+    const {firstName, secondName, phone, atl} = data;
+
+    let errors = [];
+    !firstName && errors.push('Требуется имя!');
+    !secondName && errors.push('Требуется фамилия!');
+    !atl &&  errors.push('ATI должен быть предоставлен');
+    phone && !checkPhone(data.phone) && errors.push('Не корректный номер');
+    !errors.length && onSave(data) && cleanAfterSave && setData(restartData());
+
+    for(let er of errors) {
+      message.error(er);
+    }
   }
 
   const {firstName, secondName, lastName, phone, atl} = data;
@@ -44,28 +57,28 @@ const WorkModal = ({source, visible, setVisible, onSave, v}) => {
             <div className='carrier__modal_firstName'>
               <Mentions 
                 value={firstName}
-                placeholder={'First name'}
+                placeholder={'Имя'}
                 onChange={ev => setData({...data, firstName: ev})} 
                 autoSize />
             </div>
             <div className='carrier__modal_secondName'>
               <Mentions 
                 value={secondName}
-                placeholder={'Second name'}
+                placeholder={'Фамилия'}
                 onChange={ev => setData({...data, secondName: ev})} 
                 autoSize />
             </div>
             <div className='carrier__modal_lastName'>
               <Mentions 
                 value={lastName}
-                placeholder={'Last name'}
+                placeholder={'Отчество'}
                 onChange={ev => setData({...data, lastName: ev})} 
                 autoSize />
             </div>
             <div className='carrier__modal_phone'>
               <Mentions 
                 value={phone}
-                placeholder={'Phone number'}
+                placeholder={'Номер телефона'}
                 onChange={ev => setData({...data, phone: ev})} 
                 autoSize />
             </div>
@@ -73,6 +86,7 @@ const WorkModal = ({source, visible, setVisible, onSave, v}) => {
               <Input 
                 onChange={ev => setData({...data, atl: ev.target.value})}
                 value={atl}
+                placeholder={'Код ati'}
                 addonBefore="https://ati.su/firms/" 
                 addonAfter="/info" 
                 defaultValue={atl} />

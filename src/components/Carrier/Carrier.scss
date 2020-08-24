@@ -1,9 +1,4 @@
 @import '@/styles/consts';
-@mixin icon { // накинь на все иконки
-  width: fit-content;
-  height: fit-content;
-  cursor: pointer;
-}
 
 .carrier {
   width: 100%;

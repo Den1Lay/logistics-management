@@ -24,6 +24,7 @@ const Carrier = (
     setCarrier
   }
   ) => {
+  debugger
   const [visible, setVisible] = useState(false),
   [showDls, setShowDls] = useState(false),
   [searchMod, setSearchMod] = useState(false),
@@ -47,7 +48,7 @@ const Carrier = (
     : null;
 
   const showText = liveCarrier 
-    ? liveCarrier.secondName 
+    ? `${liveCarrier.secondName} ${liveCarrier.firstName}` 
     : '';
 
   // useEffect(() => {

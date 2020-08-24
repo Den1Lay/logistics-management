@@ -6,3 +6,5 @@ export {setAssignFilter} from './main';
 export {newNote} from './main';
 export {save} from './main';
 export {setCarrier} from './main';
+export {newCarrier} from './main';
+export {deleteNote} from './main';

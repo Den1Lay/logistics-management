@@ -1,5 +1,6 @@
 // data не модифицируется
 import {createFilter, mineInd} from '@/utils'
+import {v4} from 'uuid'
 const dataPass = [
   {
     number: '123',
@@ -21,6 +22,22 @@ const carriers = [
     id: 'uuid',
     firstName: 'Bob',
     secondName: 'Brando',
+    lastName: 'Rock',
+    phone: '777',
+    atl: '99999'
+  },
+  {
+    id: 'uuid2',
+    firstName: 'Nill',
+    secondName: 'Cuper',
+    lastName: 'Rock',
+    phone: '777',
+    atl: '99999'
+  },
+  {
+    id: 'uuid3',
+    firstName: 'Mark',
+    secondName: 'Dillian',
     lastName: 'Rock',
     phone: '777',
     atl: '99999'
@@ -55,7 +72,8 @@ export default (state=defState, {type, payload}) => {
       return {
         ...state,
         reverse: !state.reverse,
-        reverseType: payload
+        reverseType: payload,
+        showData: getShowData({reverseType: payload, reverse: !state.reverse})
       };
     })()
     case 'SET_SEARCH_TYPE': // payload === 'comment' | 'name' | 'date'
@@ -95,14 +113,18 @@ export default (state=defState, {type, payload}) => {
         ...state,
         showData: getShowData({data: data.slice()}),
         data,
-        v: Math.random()
+        v: 's'+Math.random()
       }
     })()
-    case 'DELETE_NOTE':
+    case 'DELETE_NOTE': // payload === number
     return (() => {
-
+      let noteInd = [];
+      mineInd(state.data, payload, 'number', noteInd);
+      state.data.splice(noteInd[0], 1);
       return {
-        ...state
+        ...state,
+        showData: getShowData({data: state.data.slice()}),
+        v: 's'+Math.random()
       }
     })();
     case 'SAVE': // payload {address, newData, field}
@@ -138,7 +160,17 @@ export default (state=defState, {type, payload}) => {
 
         return {
           ...state,
+          showData: getShowData({data: state.data}),
           v: 's'+Math.random()
+        }
+      })();
+    case 'NEW_CARRIER': // payload === newCarrier {firstName, secondName, ...}
+      return (() => {
+        payload.id = 'c'+v4()
+        return {
+          ...state,
+          carriers: [payload, ...state.carriers],
+          v: 'c'+Math.random()
         }
       })()
     // case 'SET_SEARCH_STATUS':

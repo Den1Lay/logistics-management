@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import { connect } from 'react-redux'
 
+import WorkModal from '@/components/Carrier/Modal'
 import {DatePicker, InputNumber, Button, Switch, Input} from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons';
 
-import {setSearchData, setSearchType, newNote, setAssignFilter} from '@/actions'
+import {setSearchData, setSearchType, newNote, setAssignFilter, newCarrier} from '@/actions'
 import {getPlaceholder} from '@/utils'
 
 import './ActionsPart.scss'
@@ -20,8 +21,10 @@ const ActionsPart = (
     setSearchType, 
     setAssignFilter,
     newNote, 
+    newCarrier,
   }) => {
-  const [nR, setNR] = useState([0, 0]);
+  const [visible, setVisible] = useState(false);
+  const [nR, setNR] = useState([0, 0]); // здесь сейвится диапазон поиска по number
   (nR[0] || nR[1]) && searchType !== 'number' && setNR([0, 0]);
 
   let mainInput = null;
@@ -60,7 +63,7 @@ const ActionsPart = (
   return (
     <div className='actions'>
       <div className='actions__createNote'>
-        <Button onClick={newNote} size='large' type='primary'>Create note</Button>
+        <Button onClick={newNote} size='large' type='primary'>Новая запись</Button>
       </div>
       <div className='actions__searchZone'>
         <div className='actions_mainInput'>
@@ -83,10 +86,16 @@ const ActionsPart = (
       </div>
       <div className='actions__newCarrier'>
         <div className='actions__newCarrier_main'>
-          <Button size='large' type='primary'>New carrier</Button>
+          <Button onClick={() => setVisible(true)} size='large' type='primary'>Добавить перевозчика</Button>
         </div>
         <div className='actions__newCarrier_space'>
-
+          <WorkModal
+            onSave={carrierData => {newCarrier(carrierData);setVisible(false)}} 
+            source={null} 
+            visible={visible} 
+            setVisible={setVisible} 
+            v={null}
+           />
         </div>
       </div>
     </div>
@@ -101,4 +110,10 @@ export default connect((
     searchType, 
     onliNotAssigned
   }), 
-{setSearchData, setSearchType, setAssignFilter, newNote})(ActionsPart)
+  {
+    setSearchData, 
+    setSearchType, 
+    setAssignFilter, 
+    newNote, 
+    newCarrier
+  })(ActionsPart)

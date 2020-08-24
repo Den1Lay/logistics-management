@@ -1,9 +1,12 @@
 import React, {useState} from 'react'
+import {connect} from 'react-redux'
 import classNames from 'classnames'
 import {format} from 'date-fns'
 
 import {DeleteOutlined} from '@ant-design/icons';
 import {Firm, TextReducer, Comment, Carrier} from '@/components'
+
+import {deleteNote} from '@/actions'
 
 import './TableLine.scss'
 
@@ -13,7 +16,10 @@ const TableLine = ({data: {
   firm,
   comment,
   carrier,
-}}) => {
+  v,
+}, 
+deleteNote
+}) => {
   const [showDelete, setShowDelete] = useState(false);
   const [hover, setHover] = useState(false);
   console.log('%c%s', 'color: tomato; font-size: 22px;', 'Line RE_RENDER')
@@ -27,7 +33,9 @@ const TableLine = ({data: {
         onMouseEnter={() => setShowDelete(true)} 
         onMouseLeave={() => setShowDelete(false)} 
         >
-        <DeleteOutlined />
+        <div className='tableLine__delete_btn' onClick={() => deleteNote(number)}>
+          <DeleteOutlined />
+        </div>
       </div>
       <div className={classNames('tableLine__main', 'tableLine__main'+(hover && '-hovered'))}>
     
@@ -51,4 +59,4 @@ const TableLine = ({data: {
   )
 }
 
-export default TableLine
+export default connect(({v}) => ({v}), {deleteNote})(TableLine)
