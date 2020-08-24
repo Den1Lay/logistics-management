@@ -8,7 +8,17 @@ import {setPolarFilter, setSearchType} from '@/actions';
 
 import './HeadElement.scss';
 
-const HeadElement = ({type, text, reverse, reverseType, setPolarFilter, searchType, setSearchType}) => {
+const HeadElement = (
+  {
+    type, 
+    text, 
+    reverse, 
+    reverseType, 
+    setPolarFilter, 
+    searchType, 
+    withPolarityFilter=false,
+    setSearchType
+  }) => {
   //const [searchMod, setSearchMod] = useState(false);  
 
   const [hoverIcon, setHoverIcon] = useState(false)
@@ -32,20 +42,23 @@ const HeadElement = ({type, text, reverse, reverseType, setPolarFilter, searchTy
           reverse && 'headElement__polarityFilter-revers'
         )}>
 
-        <div 
-          onMouseEnter={() => setHoverIcon(true)}
-          onMouseLeave={() => setHoverIcon(false)}
-          className='iconWrapper'>
-          <UpOutlined style={{
-            color: 
-            hoverIcon
-            ? '#1890ff'
-            : isWorkPolarity 
-              ? '#1890ff' 
-              : 'rgba(0, 0, 0, 0.65)',
-            fontSize: '2vh'
-            }} />
-        </div>
+        {
+          withPolarityFilter && 
+          <div 
+            onMouseEnter={() => setHoverIcon(true)}
+            onMouseLeave={() => setHoverIcon(false)}
+            className='iconWrapper'>
+            <UpOutlined style={{
+              color: 
+              hoverIcon
+              ? '#1890ff'
+              : isWorkPolarity 
+                ? '#1890ff' 
+                : 'rgba(0, 0, 0, 0.65)',
+              fontSize: '2vh'
+              }} />
+          </div>
+        }
       </div>
     </div>
   )

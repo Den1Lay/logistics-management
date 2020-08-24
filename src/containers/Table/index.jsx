@@ -6,17 +6,19 @@ import {TableLine, HeadPart} from '@/containers'
 // фильтры 
 import './Table.scss';
 
-const Table = ({data}) => {
+const Table = ({showData}) => {
   return (
     <div className='table'>
       <div className='table__head'>
         <HeadPart />
       </div>
       <div className='table__main'>
-        {data.map((dataObj) => <TableLine data={dataObj} />)}
+        <div className='table__main_wrapper'>
+          {showData.map((dataObj) => <TableLine data={dataObj} />)}
+        </div>
       </div>
     </div>
   )
 }
 
-export default connect(({data}) => ({data}))(Table)
+export default connect(({showData, v}) => ({showData, v}))(Table)

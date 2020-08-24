@@ -1,12 +1,21 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux'
 
-import {Modal} from 'antd'
 import {TextReducer, WarningMessage} from '@/components'
+import WorkModal from './Modal';
+
+import {save} from '@/actions'
 
 import './Firm.scss'
 
-const Firm = ({data}) => {
+const Firm = (
+  {
+    data, 
+    address, 
+    v,
+  
+    save,
+  }) => {
   const [visible, setVisible] = useState(false)
 
   let dls = null;
@@ -30,20 +39,15 @@ const Firm = ({data}) => {
           text={showText} 
           clickable={data} />
       </div>
-      <Modal
-        title="Persons firm editor"
-        centered
-        visible={visible}
-        onOk={() => setVisible(false)}
-        onCancel={() => {console.log('CLOSE_EV');setVisible(false)}}
-      >
-        <p>some contents...</p>
-        <p>some contents...</p>
-        <p>some contents...</p>
-      </Modal>
+      <WorkModal 
+        onSave={newData => {save({newData, address, field: 'firm'});setVisible(false)}} 
+        source={data}
+        v={v}
+        visible={visible} 
+        setVisible={setVisible}/>
     </>
   )
 }
 
-export default connect(()=>({}), {})(Firm)
+export default connect(({v})=>({v}), {save})(Firm)
 

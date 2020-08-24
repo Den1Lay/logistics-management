@@ -16,7 +16,7 @@ import {Tooltip} from 'antd';
 import './TextReducer.scss'
 
 const TextReducer = ({text='', onClick=()=>{}, clickable=false, dlsMessage=null}) => {
-  
+  console.log('%c%s','color: seagreen; font-size: 22px','RE_RENDER')
   const wrapperRef = useRef(null);
   const targetRef = useRef(null)
   const [originalText, setOriginalText] = useState(null)

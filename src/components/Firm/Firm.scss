@@ -1,4 +1,11 @@
+@import '@/styles/consts';
+
 .firm {
   width: 100%;
   height: 100%;
+  
+  &__modal {
+    @include modal(10vh);
+
+  }
 }

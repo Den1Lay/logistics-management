@@ -1,4 +1,20 @@
+@import '@/styles/consts';
+
 .comment {
   width: 100%;
   height: 100%;
+
+  &__modal {
+    @include modal(30vh);
+    &_short {
+      flex: 1;
+    }
+    &_big {
+      flex: 8;
+      margin-top: 0.5vh;
+      .rc-textarea {
+        height: 100% !important;
+      }
+    }
+  }
 }

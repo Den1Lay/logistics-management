@@ -15,8 +15,8 @@ const TableLine = ({data: {
   carrier,
 }}) => {
   const [showDelete, setShowDelete] = useState(false);
-  const [hover, setHover] = useState(false)
-
+  const [hover, setHover] = useState(false);
+  console.log('%c%s', 'color: tomato; font-size: 22px;', 'Line RE_RENDER')
   return (
     <div 
       onMouseEnter={() => setHover(true)}
@@ -35,16 +35,16 @@ const TableLine = ({data: {
           <TextReducer text={number} />
         </div>
         <div className={classNames('tableLine__main_date')}>
-          <TextReducer text={format(new Date(receiveTime), 'dd/MM/yyyy mm:kk')} />
+          <TextReducer text={format(new Date(receiveTime), 'dd/MM/yyyy kk:mm')} />
         </div>
         <div className={classNames('tableLine__main_firm')}>
-          <Firm data={firm} />
+          <Firm data={firm} address={number} />
         </div>
         <div className={classNames('tableLine__main_comment')}>
-          <Comment data={comment} />
+          <Comment data={comment} address={number} />
         </div>
         <div className={classNames('tableLine__main_carrier',)}>
-          <Carrier data={carrier} />
+          <Carrier data={carrier} address={number} />
         </div>
       </div>
     </div>

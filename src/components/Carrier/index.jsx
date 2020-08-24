@@ -1,29 +1,36 @@
 import React, {useState, useEffect} from 'react'
 import classNames from 'classnames'
-import {connect} from 'react-redux'
-import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
+import {connect, batch} from 'react-redux'
+import { SearchOutlined, CloseOutlined, SwapOutlined} from '@ant-design/icons';
 
 import {TextReducer, WarningMessage} from '@/components'
 import WorkModal from './Modal'
 import {Select} from 'antd'
 
+import {save, setCarrier} from '@/actions'
+
 import './Carrier.scss'
 
 const {Option} = Select
 
-const Carrier = ({data, carriers}, ) => {
+const Carrier = (
+  {
+    data, 
+    carriers, 
+    address, 
+    v,
 
+    save,
+    setCarrier
+  }
+  ) => {
   const [visible, setVisible] = useState(false),
   [showDls, setShowDls] = useState(false),
   [searchMod, setSearchMod] = useState(false),
   //[editData, setEditData] = useState({setted: false, firstName: '', secondName: '', lastName: '', phone: '', atl: ''}),
   //[showData, setShowData] = useState({dls: null, showText: ''}),
-  options = [
-    {firstName: `Eliot`, secondName: `O'Konnor`, lastName: `Billy`},
-    {firstName: `Eliot`, secondName: `Dagen`, lastName: `Billy`},
-    {firstName: `Eliot`, secondName: `Kob`, lastName: `Billy`}
-  ].map(({secondName}) => 
-    <Option value={secondName}>{secondName}</Option>);
+  options = carriers.map(({secondName, id}) => 
+    <Option value={id}>{secondName}</Option>);
   
   let liveCarrier = null;
   if(data !== null) {
@@ -33,14 +40,14 @@ const Carrier = ({data, carriers}, ) => {
       }
     }
   };
-  liveCarrier.setted = true;
+  //liveCarrier.setted = true;
 
   const dls = !liveCarrier
     ? <WarningMessage pass={' Не назначен!'} />
     : null;
 
   const showText = liveCarrier 
-    ? liveCarrier.lastName 
+    ? liveCarrier.secondName 
     : '';
 
   // useEffect(() => {
@@ -58,11 +65,16 @@ const Carrier = ({data, carriers}, ) => {
   }
 
   function handleChange(ev) {
-    console.log('CHANGE_EV:',ev)
+
+    console.log('CHANGE_EV:',ev);
+    setSearchMod(!searchMod);
+    setCarrier({address, pass: ev});
   }
 
   function handleTextsClick() {
-    liveCarrier && setVisible(true)
+    liveCarrier 
+    ? setVisible(true)
+    : setSearchMod(!searchMod)
   }
   return (
     <>
@@ -79,7 +91,7 @@ const Carrier = ({data, carriers}, ) => {
                 style={{width: '100%'}}
                 defaultValue={``}
                 showArrow={false}
-                onBlur={() => console.log('Real blur')}
+                onBlur={() => setSearchMod(!searchMod)}
                 onSearch={handleSearch}
                 onChange={handleChange}
               >
@@ -89,16 +101,32 @@ const Carrier = ({data, carriers}, ) => {
                 onClick={handleTextsClick} 
                 text={showText} 
                 dlsMessage={dls}
-                clickable={liveCarrier} />
+                clickable />
           }
         </div>
         <div 
-          onClick={() => setSearchMod(!searchMod)}
-          className={classNames('carrier__search', 'carrier__search'+(showDls?'-show':'-hide'))}>
-          {searchMod ? <CloseOutlined /> : <SearchOutlined />}
+          
+          className={classNames('carrier__tools', 'carrier__tools'+(showDls?'-show':'-hide'))}>
+          <div className='carrier__tools_search' onClick={() => setSearchMod(!searchMod)}>
+            {searchMod ? <CloseOutlined /> : <SearchOutlined />}
+          </div>
+          <div className='carrier__tools_unset' onClick={() => {
+            debugger;
+            setCarrier({address, pass: null})
+            setShowDls({showText: '', dls: <WarningMessage pass={' Не назначен!'} />}); 
+            
+            }}>
+            <SwapOutlined />
+          </div>
         </div>
       </div>
-      <WorkModal source={liveCarrier} visible={visible} setVisible={setVisible} />    
+      <WorkModal 
+        onSave={newData => {save({newData, address, field: 'carrier'});setVisible(false)}} 
+        source={liveCarrier} 
+        visible={visible} 
+        setVisible={setVisible} 
+        v={v}
+        />    
       {/* <Modal
         title="Carrier editor"
         centered
@@ -135,4 +163,4 @@ const Carrier = ({data, carriers}, ) => {
   )
 }
 
-export default connect(({carriers}) => ({carriers}), {})(Carrier)
+export default connect(({carriers, v}) => ({carriers, v}), {save, setCarrier})(Carrier)

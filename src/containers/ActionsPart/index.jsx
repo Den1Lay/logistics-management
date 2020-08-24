@@ -1,55 +1,84 @@
 import React, {useState} from 'react';
 import { connect } from 'react-redux'
 
-import {DatePicker, Input, Button, Switch} from 'antd'
+import {DatePicker, InputNumber, Button, Switch, Input} from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons';
 
-import {setFilterData, setSearchType} from '@/actions'
+import {setSearchData, setSearchType, newNote, setAssignFilter} from '@/actions'
 import {getPlaceholder} from '@/utils'
 
 import './ActionsPart.scss'
 
 const {RangePicker} = DatePicker;
 
-const ActionsPart = ({searchType, setFilterData, setSearchType}) => {
-  const [searchData, setSearchData] = useState('')
+const ActionsPart = (
+  {
+    searchType, 
+    onliNotAssigned, 
+    
+    setSearchData, 
+    setSearchType, 
+    setAssignFilter,
+    newNote, 
+  }) => {
+  const [nR, setNR] = useState([0, 0]);
+  (nR[0] || nR[1]) && searchType !== 'number' && setNR([0, 0]);
 
-  const mainInput = 
-  <div className='actions_mainInput'>
-    {
-      searchType === 'date'
-      ? <RangePicker 
-          onChange={(ev) => setFilterData(ev)} 
+  let mainInput = null;
+  
+
+  if(searchType) {
+    switch(searchType) {
+      case 'date':
+        mainInput =
+        <RangePicker
+          autoFocus 
+          onChange={(ev) => setSearchData(ev)} 
           showTime={{ format: 'HH:mm' }} 
           format="YYYY-MM-DD HH:mm"
-          />
-      : searchType
-      ? <div className='actions_mainInput'>
-          <Input placeholder={getPlaceholder(searchType)} onChange={(ev) => setFilterData(ev.target.value)} />
-        </div>
-      : null
-    } {
-      searchType &&
-      <div className='actions_mainInput_closeIcon' onClick={() => setSearchType(null)}>
-        <CloseCircleOutlined />
-      </div>
+          /> 
+      break;
+      case 'number':
+        mainInput = 
+        <>
+          <div className='actions_mainInput_prefix'>От</div>
+          <InputNumber value={nR[0]} onChange={ev => {setNR([ev, nR[1]]); setSearchData([ev, nR[1]])}} />
+          <div className='actions_mainInput_prefix'>До</div> 
+          <InputNumber autoFocus value={nR[1]}  onChange={ev => {setNR([nR[0], ev]); setSearchData([nR[0], ev])}} />
+        </>
+      break
+      default: 
+        mainInput = 
+        <Input 
+          autoFocus
+          placeholder={getPlaceholder(searchType)} 
+          onChange={(ev) => setSearchData(ev.target.value)} />
     }
-    </div>
+  }
+  
 
   return (
     <div className='actions'>
       <div className='actions__createNote'>
-        <Button size='large' type='primary'>Create note</Button>
+        <Button onClick={newNote} size='large' type='primary'>Create note</Button>
       </div>
       <div className='actions__searchZone'>
-        {mainInput}
+        <div className='actions_mainInput'>
+          {mainInput}
+        </div>
+        {
+          searchType &&
+          <div className='actions_mainInput_closeIcon' onClick={() => setSearchType(null)}>
+            <CloseCircleOutlined />
+          </div>
+        }
       </div>
       <div className='actions__filterZone'>
         <div className='actions__filterZone_text'>
           Только не назначенные
         </div>
         <div className='actions__filterZone_switch'>
-          <Switch onChange={(ev) => console.log(ev)} />
+          <Switch defaultChecked={onliNotAssigned} onChange={setAssignFilter} />
         </div>
       </div>
       <div className='actions__newCarrier'>
@@ -64,5 +93,12 @@ const ActionsPart = ({searchType, setFilterData, setSearchType}) => {
   )
 }
 
-export default connect(({searchType}) => ({searchType}), 
-{setFilterData, setSearchType})(ActionsPart)
+export default connect((
+  {
+    searchType, 
+    onliNotAssigned
+  }) => ({
+    searchType, 
+    onliNotAssigned
+  }), 
+{setSearchData, setSearchType, setAssignFilter, newNote})(ActionsPart)

@@ -45,7 +45,13 @@
   &_mainInput {
     display: flex;
     align-items: center;
-    width: 85%;
+    //width: 85%;
+    &_prefix {
+     margin: 0 0.2vw 0 0.5vw;
+    }
+    .ant-input {
+      width: 23vw;
+    }
     &_closeIcon {
       margin-left: 1.5vh;
       &:hover {

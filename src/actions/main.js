@@ -10,7 +10,21 @@ export const setSearchType = payload => ({
   type: 'SET_SEARCH_TYPE',
   payload
 })
-export const setFilterData = payload => ({
-  type: 'SET_FILTER_DATA',
+export const setSearchData = payload => ({
+  type: 'SET_SEARCH_DATA',
+  payload
+})
+export const setAssignFilter = () => ({
+  type: 'SET_ASSIGNED_FILTER'
+})
+export const newNote = () => ({
+  type: 'NEW_NOTE'
+})
+export const save = payload => ({
+  type: 'SAVE',
+  payload
+})
+export const setCarrier = payload => ({
+  type: 'SET_CARRIER',
   payload
 })

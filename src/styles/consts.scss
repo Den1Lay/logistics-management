@@ -15,3 +15,11 @@ $darkBlue: #096dd9;
     transition: opacity 0.3s ease-in-out;
   }
 }
+
+@mixin modal($minH) {
+  width: 100%;
+  min-height: $minH;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

@@ -1,17 +1,27 @@
-import React,{useState} from 'react'
-import {Modal, Select, Input, Mentions} from 'antd'
+import React,{useState, useEffect} from 'react'
+import {Modal, Select, Input, Mentions, Button} from 'antd'
 
-const WorkModal = ({source, visible, setVisible}) => {
-  const [data, setData] = useState(source ? {...source} : {
+const WorkModal = ({source, visible, setVisible, onSave, v}) => {
+  const restartData = () => source ? {...source} : {
     firstName: '',
     secondName: '', 
     lastName: '', 
     phone: '', 
     atl: ''
+  }
+  const [data, setData] = useState(restartData())
+  const [checkV, setCheckV] = useState(null)
+
+  useEffect(() => {
+    if(checkV !== v) {
+      setData(restartData());
+      setCheckV(v)
+    }
   })
 
-  function onSave() {
-    
+  function saveClickHandler() {
+    // make here some checks
+    onSave(data)
   }
 
   const {firstName, secondName, lastName, phone, atl} = data;
@@ -20,7 +30,15 @@ const WorkModal = ({source, visible, setVisible}) => {
           centered
           visible={visible}
           onOk={() => setVisible(false)}
-          onCancel={() => {console.log('CLOSE_EV');setVisible(false)}}
+          onCancel={() => {setVisible(false); setData(restartData())}}
+          footer={[
+            <Button size='large' key="back" onClick={() => {setVisible(false); setData(restartData());}}>
+              Отмена
+            </Button>,
+            <Button size='large' key="submit" type="primary" onClick={saveClickHandler}>
+              Сохранить
+            </Button>,
+          ]}
         >
           <div className='carrier__modal'>
             <div className='carrier__modal_firstName'>

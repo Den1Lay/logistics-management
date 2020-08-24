@@ -1,32 +1,47 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 
-import {TextReducer} from '@/components'
-import {Modal} from 'antd'
+import {TextReducer, WarningMessage} from '@/components'
+import WorkModal from './Modal'
+
+import {save} from '@/actions'
 
 import './Comment.scss'
 
-const Comment = () => {
+const Comment = (
+  {
+    data, 
+    address,
+    v,
+
+    save
+  }) => {
   const [visible, setVisible] = useState(false);
+
+  const showText = data
+    ? data.short
+    : '';
+  const dls = !data 
+    ? <WarningMessage pass=' Пустое поле!' />
+    : null
 
   return (
     <>
       <div className='comment' >
-        <TextReducer onClick={() => setVisible(true)} text={'Comment ewe w wwewewe wewewewew wewewe wewewe loooooool lol'} clickable />
+        <TextReducer 
+          onClick={() => setVisible(true)} 
+          dlsMessage={dls}
+          text={showText} 
+          clickable />
       </div>
-      <Modal
-        title="Comment editor"
-        centered
-        visible={visible}
-        onOk={() => setVisible(false)}
-        onCancel={() => setVisible(false)}
-      >
-        <p>some contents...</p>
-        <p>some contents...</p>
-        <p>some contents...</p>
-      </Modal>
+      <WorkModal 
+        onSave={newData => {save({newData, address, field: 'comment'});setVisible(false)}} 
+        source={data}
+        v={v}
+        visible={visible} 
+        setVisible={setVisible} />
     </>
   )
 }
 
-export default connect(() => ({}), {})(Comment)
+export default connect(({v}) => ({v}), {save})(Comment)
