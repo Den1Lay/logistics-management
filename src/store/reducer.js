@@ -45,9 +45,11 @@ const carriers = [
 ]
 
 const defState = {
-  data: dataPass,
-  showData:dataPass,
-  carriers,
+  data: [],
+  showData:[],
+  carriers: [],
+  refreshed: false,
+  v: 'init',
 
   reverse: false, // data for filters
   reverseType: 'number',
@@ -57,15 +59,20 @@ const defState = {
 }
 
 export default (state=defState, {type, payload}) => {
-
+  debugger
   const getShowData = createFilter({...state, data: state.data.slice()})
   switch(type) {
-    case 'INIT': 
+    case 'SET_DATA': // payload === {notes, carriers}
     return (() => {
+      const {notes, carriers} = payload;
+
       return {
-        ...state
+        ...state,
+          data: notes,
+          carriers,
+          showData: getShowData({data: notes, carriers})
       };
-    })
+    })()
     case 'SET_POLARITY_FILTER': // payload === 'comment' | 'name' | 'date'
     return (() => {
 

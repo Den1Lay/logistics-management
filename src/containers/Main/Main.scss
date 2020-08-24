@@ -18,4 +18,10 @@
   &__table {
     flex: 12;
   }
+  &__docs {
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    left: 46%;
+  }
 }

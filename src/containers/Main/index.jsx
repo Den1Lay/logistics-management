@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 
-
 import {Table, ActionsPart} from '@/containers'
+
+import {fetchData} from '@/actions'
 
 import './Main.scss'
 
-const Main = ({}) => {
+const Main = ({refreshed,  fetchData}) => {
 
   useEffect(() => {
-
+    debugger
+    !refreshed && fetchData()
   });
 
   // function rangePickHandler(vals) {
@@ -27,6 +29,9 @@ const Main = ({}) => {
       <div className='main__table'>
         <Table />
       </div>
+      <a target='_blank' href={window.location.origin+'/public/about.pdf'} className='main__docs'>
+        Документация
+      </a>
       {/* <RangePicker 
         onChange={rangePickHandler} 
         showTime={{ format: 'HH:mm' }} 
@@ -41,4 +46,4 @@ const Main = ({}) => {
   )
 }
 
-export default connect(()=>({}), {})(Main);
+export default connect(({refreshed})=>({refreshed}), {fetchData})(Main);

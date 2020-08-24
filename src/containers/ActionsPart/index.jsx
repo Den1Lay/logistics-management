@@ -63,7 +63,7 @@ const ActionsPart = (
   return (
     <div className='actions'>
       <div className='actions__createNote'>
-        <Button onClick={newNote} size='large' type='primary'>Новая запись</Button>
+        <Button onClick={newNote} size='large' type='primary'>Новая заявка</Button>
       </div>
       <div className='actions__searchZone'>
         <div className='actions_mainInput'>

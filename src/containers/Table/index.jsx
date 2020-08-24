@@ -3,6 +3,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 
 import {TableLine, HeadPart} from '@/containers'
+import {Empty} from 'antd'
 // фильтры 
 import './Table.scss';
 
@@ -15,6 +16,7 @@ const Table = ({showData}) => {
       <div className='table__main'>
         <div className='table__main_wrapper'>
           {showData.map((dataObj) => <TableLine data={dataObj}  />)}
+          {!showData.length && <div className='plug'><Empty description={'Пора добавить несколько заявок?'} /></div>}
         </div>
       </div>
     </div>

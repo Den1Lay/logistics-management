@@ -24,7 +24,6 @@ const Carrier = (
     setCarrier
   }
   ) => {
-  debugger
   const [visible, setVisible] = useState(false),
   [showDls, setShowDls] = useState(false),
   [searchMod, setSearchMod] = useState(false),

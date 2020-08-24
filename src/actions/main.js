@@ -1,7 +1,3 @@
-export const initData = payload => ({
-  type:'INIT',
-  payload
-})
 export const setPolarFilter = payload => ({
   type: 'SET_POLARITY_FILTER',
   payload
