@@ -10,6 +10,7 @@
 
 import React, {useState, useEffect, useRef} from 'react'
 import classNames from 'classnames'
+import {replaceAll} from '@/utils'
 
 import {Tooltip} from 'antd';
 
@@ -20,12 +21,12 @@ const TextReducer = ({text='', onClick=()=>{}, clickable=false, dlsMessage=null}
   const wrapperRef = useRef(null);
   const targetRef = useRef(null)
   const [originalText, setOriginalText] = useState(null)
-  const [textData, setTextData] = useState({payload: text.replaceAll(' ', '_'), ready: false, changed: false});
+  const [textData, setTextData] = useState({payload: replaceAll(text, ' ', '_'), ready: false, changed: false});
 
   useEffect(() => {
     if(originalText !== text) { // ручное обновление главного пропса
       setOriginalText(text);
-      setTextData({payload: text.replaceAll(' ', '_'), ready: false, changed: false})
+      setTextData({payload: replaceAll(text, ' ', '_'), ready: false, changed: false})
     }
 
     const {clientWidth: wrapperW} = wrapperRef.current;
@@ -37,7 +38,7 @@ const TextReducer = ({text='', onClick=()=>{}, clickable=false, dlsMessage=null}
       setTextData({...textData, payload: resStr, changed: true});
 
     } else if(!ready) {
-      let textWithSpace = payload.replaceAll('_', ' ');
+      let textWithSpace = replaceAll(payload, '_', ' ');
       textWithSpace = changed ? textWithSpace.substring(0, payload.length-3)+'...' : textWithSpace;
       setTextData({...textData, payload: textWithSpace, ready: true});
     }

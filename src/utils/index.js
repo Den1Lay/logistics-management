@@ -1,5 +1,6 @@
 export {default as createFilter} from './filters'
 export {default as mineInd} from './mineInd';
+export {default as replaceAll} from './replaceAll';
 export const checkPhone = phone => /^([+]?[0-9\s-\(\)]{3,25})*$/i.test(phone);
 export function getPlaceholder(type) {
   switch(type) {
