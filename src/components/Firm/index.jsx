@@ -1,3 +1,5 @@
+// Элемент таблицы с фирмой.
+
 import React, {useState} from 'react';
 import {connect} from 'react-redux'
 

@@ -1,3 +1,5 @@
+// Элемент таблицы с комментарием
+
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 

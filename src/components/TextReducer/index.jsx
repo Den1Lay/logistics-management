@@ -1,12 +1,6 @@
-// отрабатывает несколько циклов уменьшения.
-// сначала чекат высоту. Если она больше то, длина текста уменьшается и сейвится в локе
-// Если width больше wrappera, то еще раз все уменьшается.
-
-// Неожиданной проблемой стали пробемы, которые разделяют строку и как бы отрезают ее
-// если она в overflow: hidden элементе
-// фиксилось реплейсом, и предвыходным обработчиком
-
-// на крайний случай просто подберу оптимальное количество символов
+// Компонент обрезает строку и добавляет для нее вспомогательное окно
+// В котором находится все содержимое строки. 
+// Окно появляется, если навести мышью на обрезанный текст.
 
 import React, {useState, useEffect, useRef} from 'react'
 import classNames from 'classnames'
@@ -17,13 +11,15 @@ import {Tooltip} from 'antd';
 import './TextReducer.scss'
 
 const TextReducer = ({text='', onClick=()=>{}, clickable=false, dlsMessage=null}) => {
-  console.log('%c%s','color: seagreen; font-size: 22px','RE_RENDER')
   const wrapperRef = useRef(null);
   const targetRef = useRef(null)
   const [originalText, setOriginalText] = useState(null)
   const [textData, setTextData] = useState({payload: replaceAll(text, ' ', '_'), ready: false, changed: false});
 
   useEffect(() => {
+    // любой текст с пробелами превращается в строку у которой будет определенная длина 
+    // и на основе сравнения ширины строки и Wrapper'a происходит уменьшение. 
+
     if(originalText !== text) { // ручное обновление главного пропса
       setOriginalText(text);
       setTextData({payload: replaceAll(text, ' ', '_'), ready: false, changed: false})

@@ -1,6 +1,9 @@
-import React, {useState, useEffect} from 'react'
+// Компонент отвечает за отрисовку элемента таблицы с перевозчиком.
+// И обработку всех событий, которые с ним связаны.
+
+import React, {useState} from 'react'
 import classNames from 'classnames'
-import {connect, batch} from 'react-redux'
+import {connect} from 'react-redux'
 import { SearchOutlined, CloseOutlined, SwapOutlined} from '@ant-design/icons';
 
 import {TextReducer, WarningMessage} from '@/components'
@@ -27,8 +30,6 @@ const Carrier = (
   const [visible, setVisible] = useState(false),
   [showDls, setShowDls] = useState(false),
   [searchMod, setSearchMod] = useState(false),
-  //[editData, setEditData] = useState({setted: false, firstName: '', secondName: '', lastName: '', phone: '', atl: ''}),
-  //[showData, setShowData] = useState({dls: null, showText: ''}),
   options = carriers.map(({secondName, id}) => 
     <Option value={id}>{secondName}</Option>);
   
@@ -49,16 +50,6 @@ const Carrier = (
   const showText = liveCarrier 
     ? `${liveCarrier.secondName} ${liveCarrier.firstName}` 
     : '';
-
-  // useEffect(() => {
-  //   //console.log('FFF_update')
-  //   //setShowData({showText, dls});
-  //   liveCarrier 
-  //   ? !editData.setted && setEditData(liveCarrier) // первый рендер 
-  //   // если обновился и не нашел рабочего чела.
-  //   : !editData.setted && setEditData({setted: true, firstName: '', secondName: '', lastName: '', phone: '', atl: ''})
-  // })
-
 
   function handleSearch(ev) {
     console.log('SEARCH_EV:',ev)
@@ -126,39 +117,7 @@ const Carrier = (
         visible={visible} 
         setVisible={setVisible} 
         v={v}
-        />    
-      {/* <Modal
-        title="Carrier editor"
-        centered
-        visible={visible}
-        onOk={() => setVisible(false)}
-        onCancel={() => {console.log('CLOSE_EV');setVisible(false)}}
-      >
-        <div className='carrier__modal'>
-          <div className='carrier__modal_firstName'>
-            <Mentions 
-              value={firstName}
-              placeholder={'First name'}
-              onChange={(ev) => console.log('FirstName_change:', ev)} 
-              autoSize />
-          </div>
-          <div className='carrier__modal_secondName'>
-
-          </div>
-          <div className='carrier__modal_lastName'>
-
-          </div>
-          <div className='carrier__modal_phone'>
-
-          </div>
-          <div className='carrier__modal_atl'>
-            <Input addonBefore="http://" addonAfter=".com" defaultValue="mysite" />
-          </div>
-          <div className='carrier__modal_atlLink'>
-
-          </div>
-        </div>
-      </Modal> */}
+        />
     </>
   )
 }

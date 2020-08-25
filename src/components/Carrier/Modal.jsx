@@ -1,3 +1,5 @@
+// Всплывающее окно, которое появляется при клике на элемент таблицы.
+
 import React,{useState, useEffect} from 'react'
 import {Modal, Select, Input, Mentions, Button, message} from 'antd'
 
@@ -26,6 +28,7 @@ const WorkModal = ({source, visible, setVisible, onSave, cleanAfterSave=false, v
     const {firstName, secondName, phone, atl} = data;
 
     let errors = [];
+    // проверка данных с формы
     !firstName && errors.push('Требуется имя!');
     !secondName && errors.push('Требуется фамилия!');
     !atl &&  errors.push('ATI должен быть предоставлен');

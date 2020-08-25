@@ -1,3 +1,6 @@
+// Здесь располагаются кнопки создания заявки и перевозчика, а так же здесь
+// Находятся все инпуты фильтров
+
 import React, {useState} from 'react';
 import { connect } from 'react-redux'
 

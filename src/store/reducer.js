@@ -1,7 +1,13 @@
-// data не модифицируется
+// Приложение работает вокруг трек основных массивов. Это "data" - массив с заявками,  
+// "carriers" - массив с перевозчиками и "showData" - массив с данными, которые будут демострироваться юзеру.
+// В объектах data хранится номер, время получения, объект с данными фирмы, комментарий и id назначенного
+// исполнителя заявки. 
+// В объектах carriers хранятся данные исполнителя. Связь между массивами выстраивается через id. 
+// Все действия, которые происходят в редюсере направлены на модифирование этих трех массивов.
+
 import {createFilter, mineInd} from '@/utils'
 import {v4} from 'uuid'
-const dataPass = [
+const dataPass = [ // они здесь для большей наглядности структуры данных
   {
     number: '123',
     receiveTime: 'Sun Aug 23 2020 02:46:54 GMT+0500 (Екатеринбург, стандартное время)',
@@ -44,6 +50,12 @@ const carriers = [
   }
 ]
 
+// Так же ключевым элементом являются данные о фильтрах, которые напрямую участвуют в создании 
+// showData. Грубо говоря фильтры работают все время. Изменяются только их параметры.
+
+// Ключ v отвечает за "ручное" обновление компонентов. (см комментарии в containers/TableLine/index.jsx)
+// А также сигнализирует о том, какое действие только что произошло для его перехвата и дальнейших действий (см ком. в store/index.js)
+
 const defState = {
   data: [],
   showData:[],
@@ -59,8 +71,11 @@ const defState = {
 }
 
 export default (state=defState, {type, payload}) => {
-  debugger
+
   const getShowData = createFilter({...state, data: state.data.slice()})
+  // съедает все данные о включенных фильтрах, а также в последующем модифируется 
+  // более свежими версиями ключей
+
   switch(type) {
     case 'SET_DATA': // payload === {notes, carriers}
     return (() => {
@@ -74,25 +89,19 @@ export default (state=defState, {type, payload}) => {
       };
     })()
     case 'SET_POLARITY_FILTER': // payload === 'comment' | 'name' | 'date'
-    return (() => {
-
-      return {
-        ...state,
-        reverse: !state.reverse,
-        reverseType: payload,
-        showData: getShowData({reverseType: payload, reverse: !state.reverse})
-      };
-    })()
+    return {
+      ...state,
+      reverse: !state.reverse,
+      reverseType: payload,
+      showData: getShowData({reverseType: payload, reverse: !state.reverse})
+    };
     case 'SET_SEARCH_TYPE': // payload === 'comment' | 'name' | 'date'
-    return (() => {
-      //state.searchType = payload;
-      return { 
-        ...state, 
-        searchType: payload,
-        searchData: null,
-        showData: getShowData({searchType: payload, searchData: null})
-      };
-    })();
+    return { 
+      ...state, 
+      searchType: payload,
+      searchData: null,
+      showData: getShowData({searchType: payload, searchData: null})
+    };
     case 'SET_ASSIGNED_FILTER':
     return {
       ...state,
@@ -172,19 +181,12 @@ export default (state=defState, {type, payload}) => {
         }
       })();
     case 'NEW_CARRIER': // payload === newCarrier {firstName, secondName, ...}
-      return (() => {
-        payload.id = 'c'+v4()
-        return {
-          ...state,
-          carriers: [payload, ...state.carriers],
-          v: 'c'+Math.random()
-        }
-      })()
-    // case 'SET_SEARCH_STATUS':
-    // return (() => {
-    //   state.search = '';
-    //   return state
-    // })
+      payload.id = 'c'+v4()
+      return {
+        ...state,
+        carriers: [payload, ...state.carriers],
+        v: 'c'+Math.random()
+      }
     default: 
     return state
   }

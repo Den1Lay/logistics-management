@@ -1,10 +1,10 @@
-// быстрый чек на ререндор и дальнейшее планирование от него
+// Таблица на флексах.
 import React from 'react'
 import {connect} from 'react-redux'
 
 import {TableLine, HeadPart} from '@/containers'
 import {Empty} from 'antd'
-// фильтры 
+
 import './Table.scss';
 
 const Table = ({showData}) => {
@@ -15,7 +15,7 @@ const Table = ({showData}) => {
       </div>
       <div className='table__main'>
         <div className='table__main_wrapper'>
-          {showData.map((dataObj) => <TableLine data={dataObj}  />)}
+          {showData.map((dataObj) => <TableLine data={dataObj} />)}
           {!showData.length && <div className='plug'><Empty description={'Пора добавить несколько заявок?'} /></div>}
         </div>
       </div>
@@ -23,4 +23,4 @@ const Table = ({showData}) => {
   )
 }
 
-export default connect(({showData, v}) => ({showData, v}))(Table)
+export default connect(({showData}) => ({showData}))(Table)

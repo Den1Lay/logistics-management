@@ -1,5 +1,7 @@
+// Всплывающее окно, которое появляется при клике на элемент таблицы.
+
 import React,{useState, useEffect} from 'react'
-import {Modal, Select, Input, Mentions, Button} from 'antd'
+import {Modal, Mentions, Button} from 'antd'
 
 const WorkModal = ({source, visible, setVisible, onSave, v}) => {
   const restartData = () => source ? {...source} : {
