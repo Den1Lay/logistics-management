@@ -26,9 +26,14 @@ const Main = ({refreshed,  fetchData}) => {
       <div className='main__table'>
         <Table />
       </div>
-      <a target='_blank' href={window.location.origin+'/public/about.pdf'} className='main__docs'>
-        Документация
-      </a>
+      <div className='main__docs'>
+        <a target='_blank' href={window.location.origin+'/public/about.pdf'} >
+          Документация
+        </a>
+        <a target='_blank' href={window.location.origin+'/public/test.pdf'} >
+          Задание
+        </a>
+      </div>
     </div>
   )
 }
